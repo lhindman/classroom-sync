@@ -31,7 +31,7 @@ keyring set canvas token
 ```
 
 ## Development Notes
-This code was developed and tested on Ubuntu 20.04
+This code was developed and tested on Ubuntu 20.04 running Python 3.8.10
 
 
 
