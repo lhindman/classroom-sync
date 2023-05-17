@@ -10,7 +10,7 @@ Usage: classroom-sync.py <assignment>
 ```
 
 ## Before using this tool, do the following:
-1. Set up SSH keybased authentication with GitHub  
+1. Set up SSH key-based authentication with GitHub  
 2. Download the classroom_roster.csv file from GitHub Classroom  
 3. Update classroom-config.json with the details for your classroom  
 4. Enable API access for Canvas user account and store token in OS keyring. Details are provided below
