@@ -1,0 +1,8 @@
+{
+    "global":{
+        "github-roster":"classroom-roster.csv",
+        "github-org":"HindmanCourses",
+        "canvas-course-name":"Sp23 - CS 121",
+        "classroom-path":"grading"
+    }
+}
