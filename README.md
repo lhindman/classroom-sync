@@ -1,7 +1,8 @@
 ![Classroom Sync](images/classroom-sync.png)
-# Classroom Sync
-Sync tool for GitHub Classroom assignments.  
+# Classroom Sync Suite
+These are a collection of tools for working with GitHub Classroom assignments.  
 
+## Classroom Sync
 This tool pulls a list of students from a Canvas course, then uses the provided roster.csv file to map the the Canvas user names to github user names. It then retrieves student repositories for the specified assignment and renames them to include Canvas username instead of their GitHub username.
 
 ```
@@ -9,6 +10,7 @@ Usage: classroom-sync.py <assignment>
     assignment - You can find the list of assignment names on GitHub Classroom
 ```
 
+## Classroom Sync Basic
 The original version of this tool did not have a dependency upon Canvas and instead the flow is simply for each entry in the roster.csv file, retrieve the student repository for the specified assignment and rename it to use the institution username from the mapping.  
 
 ```
