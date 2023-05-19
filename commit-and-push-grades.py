@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 # Author:  Luke Hindman
-# Date: Wed 17 May 2023 01:55:54 PM MDT
-# Description: Sync tool for GitHub Classroom assignments
-#     This tool will retrieve student repositories and rename them
-#        to include Canvas username instead of their
-#        GitHub username.
+# Date: Fri 19 May 2023 01:46:30 PM MDT
+# Description: This tool will commit and push GRADE.md files localed in student
+#    repositories to GitHub. It first connects to Canvas to retrieve the student roster,
+#    For each student it then opens the local repo in the specified assignment folder
+#    and stages (adds) each GRADE.md to a single commit with is then pushed to GitHub.
+#
+#    While not strictly necessary, by using the Canvas roster this tool can display info
+#    regarding students who do not have a local repo or who do not have a GitHub mapping.
 #
 #     Before using this tool, do the following:
 #       1. Set up SSH keybased authentication with GitHub  
@@ -12,7 +15,7 @@
 #       3. Update classroom-config.json with the details for your classroom  
 #       4. Enable API access for Canvas user account and store token in OS keyring. Details are provided below
 #
-#  Usage: classroom-sync.py <assignment> 
+#  Usage: commit-and-push-grades.py <assignment> 
 #
 #   assignment - You can find the list of assignment names on GitHub Classroom
 
@@ -21,6 +24,7 @@
 import csv
 import sys
 import os
+import os.path
 import json
 import subprocess
 from subprocess import CalledProcessError
@@ -75,6 +79,23 @@ def canvas_get_students(course):
     
     return student_dict
 
+
+# Repositories that that represent multiple assignments will may contain
+#   multiple GRADE.md files. The purpose of this function is to begin
+#   at the root of a student repository and recusively traverse the entire
+#   repo, building a list of GRADE.md files with paths that are relative 
+#   to the root.
+def get_gradefile_list(student_repo_path):
+    gradefile_list=[]
+
+    for dirpath, dirnames, filenames in os.walk(student_repo_path):
+        for gradefile in [f for f in filenames if f == "GRADE.md"]:
+            full_gradefile_path=os.path.join(dirpath,gradefile)
+            relative_gradefile_path=os.path.relpath(full_gradefile_path,start=student_repo_path)
+            gradefile_list.append(relative_gradefile_path)
+
+    return gradefile_list
+
 # Return a dictionay containing the github roster mapping
 #   with the key valuing being the Canvas username
 #   and the value being the github username.
@@ -97,35 +118,26 @@ def get_github_roster(roster_file):
     return github_roster
 
 
-def clone_student_repos(students,github_roster,github_organization,assignment_name,classroom_path,student_filter):
+def commit_and_push_student_repos(students,github_roster,github_organization,assignment_name,classroom_path,student_filter):
 
-    # GitHub repo URLs are in lowercase, so convert specified
-    #    assignment name for consistency
-    assignment_name = assignment_name.lower()
 
-    # Setup classroom and assignment directory structure 
-    if not os.path.isdir(classroom_path):
-        os.mkdir(classroom_path)
-
-    assignment_path = os.path.join(classroom_path,assignment_name) 
-    if not os.path.isdir(assignment_path):
-        os.mkdir(assignment_path)
+    assignment_path = os.path.join(classroom_path,assignment_name)
 
     repo_status = {}
     num_students = len(students)
     student_count = 1
-    print("Cloning Student Repos\n\n")
+    print("Commit and Push Student Repos\n\n")
     for student in students.values():
         canvas_username = student.login_id
         if canvas_username.lower() not in github_roster.keys():
-            print("- Warning: User not found on GitHub roster: " + canvas_username)
-            repo_status[canvas_username] = "User not found on GitHub roster"
             continue
         github_username = github_roster[canvas_username.lower()]
 
         if student_filter is None or (student_filter is not None and canvas_username.lower() == student_filter):
+
             print("%-40s (%s)" % (canvas_username, str(student_count) + "/" + str(num_students)))
             student_count = student_count + 1
+            repo_path = os.path.join(assignment_path,canvas_username)
 
             # Skip users with no mapping to GitHub accounts
             if github_username == "":
@@ -135,19 +147,30 @@ def clone_student_repos(students,github_roster,github_organization,assignment_na
 
             url="git@github.com:" + github_organization + "/" + assignment_name + "-" + github_username + ".git"
             try: 
-                entry_path = os.path.join(assignment_path,canvas_username)
-                if os.path.isdir(os.path.join(entry_path,".git")):
-                    subprocess.run(['git','pull'],cwd=entry_path,capture_output=True,timeout=20,check=True,text=True)
-                    repo_status[canvas_username] = "Repo pulled successfully: %s" % (url)
+                if os.path.isdir(os.path.join(repo_path,".git")):
+                    # Build a list of GRADE.md files to commit and push
+                    gradefile_list = get_gradefile_list(repo_path)
+                    for gradefile in gradefile_list:
+                        # subprocess.run(['git','add',gradefile],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
+                        print("DEBUG: git add " + gradefile)
+                    #subprocess.run(['git','commit','-m','Updated grading report'],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
+                    print("DEBUG: git commit -m 'Updated grading report'")
+                    #subprocess.run(['git','push'],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
+                    print("DEBUG: git push")
+                    repo_status[canvas_username] = "Detailed grading report pushed to repo: %s" % (url)
+                    # print("Detailed grading report pushed to repo: %s" % (url))
                 else:
-                    subprocess.run(['git','clone', url, canvas_username],cwd=assignment_path,capture_output=True,timeout=20,check=True,text=True)
-                    repo_status[canvas_username] = "Repo cloned successfully: %s" % (url)
+                    print("- Warning: No GitHub submission found for user: " + canvas_username)
+                    repo_status[canvas_username] = "No GitHub submission found"
             except CalledProcessError as e:
-                print("- Warning: Unable to clone repo: " + url)
-                repo_status[canvas_username] = "Error while cloning repository"
+                print("- Warning: Unable to push repo: " + url)
+                print(e.stdout)
+                print(e.stderr)
+                repo_status[canvas_username] = "Error while pushing grading report to repo"
+
             except subprocess.TimeoutExpired as e:
-                print("- Warning: Unable to clone repo (timeout): " + url)
-                repo_status[canvas_username] = "Timeout while cloning repository"
+                print("- Warning: Unable to push repo (timeout): " + url)
+                repo_status[canvas_username] = "Timeout while pushing grading report to repo"
 
     return repo_status
 
@@ -190,7 +213,7 @@ def main():
     # Load GitHub Roster and store to dictionary, indexed by Canvas username in lowercase
     github_roster = get_github_roster(roster_file)
 
-    clone_student_repos(canvas_students,github_roster,github_org,assignment,classroom_path,student_filter=None)
+    commit_and_push_student_repos(canvas_students,github_roster,github_org,assignment,classroom_path,student_filter=None)
 
 
 if __name__ == '__main__':

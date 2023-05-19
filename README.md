@@ -30,13 +30,13 @@ pip install keyring
 ```
 
 ## Canvas API Notes
-Instead of embedding the canvas token, I am using the python keyring library to integrate with the operating systems keystore.  Once the python modules are installed, use the following command-line options to add the required values to the OS level keystore. To create an Access Token in Canvas do the following:
+Instead of embedding the canvas token, I am using the python keyring library to integrate with the operating systems keystore.  Once the python modules are installed, use the following command-line options to add the required values to the OS level keystore.  
 
-Go to Account, Settings, New Access Token with reason “To Synchronize Github Classrooms and Grades"
+To create an Access Token in Canvas do the following:
+
+- Go to Account, Settings, New Access Token with reason “To Synchronize Github Classrooms and Grades"
 
 ```
-keyring set canvas url
-# set password to the following:  https://boisestatecanvas.instructure.com/
 keyring set canvas token
 # set password to the following:  <dev token from Canvas>
 ```
