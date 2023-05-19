@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Author:  Luke Hindman
 # Date: Fri 19 May 2023 01:46:30 PM MDT
-# Description: This tool will commit and push GRADE.md files localed in student
+# Description: This tool will commit and push GRADE.md files located in student
 #    repositories to GitHub. It first connects to Canvas to retrieve the student roster,
 #    For each student it then opens the local repo in the specified assignment folder
 #    and stages (adds) each GRADE.md to a single commit with is then pushed to GitHub.
