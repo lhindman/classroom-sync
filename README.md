@@ -18,6 +18,18 @@ Usage: classroom-sync-basic.py <assignment>
     assignment - You can find the list of assignment names on GitHub Classroom
 ```
 
+### Commit and Push Grades (Canvas)
+This tool will commit and push GRADE.md files, located within student repositories, to GitHub.  It first connects to Canvas to retrieve the student roster. For each student it then opens the local repo in the specified assignment folder and stages (adds) each GRADE.md to a single commit which is then pushed to GitHub. Since it is possible for a single repositories to contain multiple coding projects, multiple GRADE.md files may be found and pushed to GitHub for a single repository.
+
+While not strictly necessay, by using the Canvas roster this tool can display info regarding students who not not have a local repository or who do not have a GitHub mapping. This can be helpful for debugging purposes or for razing the visibility of students who are not completing the assignments.
+
+NOTE:  This tool is designed to be used on student repositories that have previousoly been cloned from GitHub using the classroom-sync.py tool described above.
+
+```
+Usage: commit-and-push-grades.py <assignment> 
+    assignment - You can find the list of assignment names on GitHub Classroom
+```
+
 ## Before using this tool, do the following:
 1. Set up SSH key-based authentication with GitHub  
 2. Download the classroom_roster.csv file from GitHub Classroom  
