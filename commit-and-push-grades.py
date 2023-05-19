@@ -16,8 +16,6 @@
 #
 #   assignment - You can find the list of assignment names on GitHub Classroom
 
-
-
 import csv
 import sys
 import os
@@ -116,14 +114,13 @@ def get_github_roster(roster_file):
 
 
 def commit_and_push_student_repos(students,github_roster,github_organization,assignment_name,classroom_path,student_filter):
-
-
     assignment_path = os.path.join(classroom_path,assignment_name)
 
     repo_status = {}
     num_students = len(students)
     student_count = 1
     print("Commit and Push Student Repos\n\n")
+
     for student in students.values():
         canvas_username = student.login_id
         if canvas_username.lower() not in github_roster.keys():
@@ -170,7 +167,6 @@ def commit_and_push_student_repos(students,github_roster,github_organization,ass
                 repo_status[canvas_username] = "Timeout while pushing grading report to repo"
 
     return repo_status
-
 
 def main():
     
