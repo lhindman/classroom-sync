@@ -9,11 +9,8 @@
 #    While not strictly necessary, by using the Canvas roster this tool can display info
 #    regarding students who do not have a local repo or who do not have a GitHub mapping.
 #
-#     Before using this tool, do the following:
-#       1. Set up SSH keybased authentication with GitHub  
-#       2. Download the classroom_roster.csv file from GitHub Classroom  
-#       3. Update classroom-config.json with the details for your classroom  
-#       4. Enable API access for Canvas user account and store token in OS keyring. Details are provided below
+#    NOTE: This tool is designed to be used on student repositories that have previously been 
+#    cloned from GitHub using the classroom-sync.py tool.
 #
 #  Usage: commit-and-push-grades.py <assignment> 
 #
