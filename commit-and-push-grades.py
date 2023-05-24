@@ -145,11 +145,13 @@ def commit_and_push_student_repos(students,github_roster,github_organization,ass
                     # Build a list of GRADE.md files to commit and push
                     gradefile_list = get_gradefile_list(repo_path)
                     for gradefile in gradefile_list:
-                        # subprocess.run(['git','add',gradefile],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
+                        subprocess.run(['git','add',gradefile],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
                         print("DEBUG: git add " + gradefile)
-                    #subprocess.run(['git','commit','-m','Updated grading report'],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
+                    
+                    subprocess.run(['git','commit','-m','Updated grading report'],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
                     print("DEBUG: git commit -m 'Updated grading report'")
-                    #subprocess.run(['git','push'],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
+                    
+                    subprocess.run(['git','push'],cwd=repo_path,capture_output=True,timeout=20,check=True,text=True)
                     print("DEBUG: git push")
                     repo_status[canvas_username] = "Detailed grading report pushed to repo: %s" % (url)
                     # print("Detailed grading report pushed to repo: %s" % (url))
