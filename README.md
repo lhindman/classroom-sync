@@ -49,6 +49,7 @@ This tool requires python3.8 and the pip utility as well as the following python
 ```
 pip3 install canvasapi
 pip3 install keyring
+pip3 install python-decouple
 ```
 
 ## Canvas API Notes
