@@ -14,7 +14,7 @@ Before running the tools below, please be certain to start the SSH Agent and add
 This tool pulls a list of students from a Canvas course, then uses the provided roster.csv file to map the the Canvas user names to github user names. It then retrieves student repositories for the specified assignment and renames them to include Canvas username instead of their GitHub username.
 
 ```
-Usage: classroom-sync.py <assignment> 
+Usage: python3 classroom-sync.py <assignment> 
     assignment - You can find the list of assignment names on GitHub Classroom
 ```
 
@@ -22,7 +22,7 @@ Usage: classroom-sync.py <assignment>
 The original version of this tool did not have a dependency upon Canvas and instead the flow is simply for each entry in the roster.csv file, retrieve the student repository for the specified assignment and rename it to use the institution username from the mapping.  
 
 ```
-Usage: classroom-sync-basic.py <assignment> 
+Usage: python3 classroom-sync-basic.py <assignment> 
     assignment - You can find the list of assignment names on GitHub Classroom
 ```
 
@@ -34,7 +34,7 @@ While not strictly necessay, by using the Canvas roster this tool can display in
 NOTE:  This tool is designed to be used on student repositories that have previousoly been cloned from GitHub using the classroom-sync.py tool described above.
 
 ```
-Usage: commit-and-push-grades.py <assignment> 
+Usage: python3 commit-and-push-grades.py <assignment> 
     assignment - You can find the list of assignment names on GitHub Classroom
 ```
 
@@ -47,8 +47,8 @@ Usage: commit-and-push-grades.py <assignment>
 ## Installation Notes
 This tool requires python3.8 and the pip utility as well as the following python modules:
 ```
-pip install canvasapi
-pip install keyring
+pip3 install canvasapi
+pip3 install keyring
 ```
 
 ## Canvas API Notes
