@@ -60,6 +60,7 @@ To create an Access Token in Canvas do the following:
 - Go to Account, Settings, New Access Token with reason “To Synchronize Github Classrooms and Grades"
 
 #### Store Canvas Token in OS Keyring
+This is the preferred method for storing the Canvas token because it is encrypted within the Operating System's keystore
 ```
 keyring set canvas token
 # set password to the following:  <dev token from Canvas>
