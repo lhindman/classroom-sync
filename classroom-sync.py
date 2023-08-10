@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # Author:  Luke Hindman
 # Date: Wed 17 May 2023 01:55:54 PM MDT
 # Description: Sync tool for GitHub Classroom assignments

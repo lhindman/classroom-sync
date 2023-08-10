@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # Author:  Luke Hindman
 # Date: Fri 19 May 2023 01:46:30 PM MDT
 # Description: This tool will commit and push GRADE.md files located in student
