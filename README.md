@@ -93,6 +93,7 @@ python3.8 commit-and-push-grades.py <assignment>
 
 ## Development Notes
 This code was developed and tested on Ubuntu 20.04 running Python 3.8.10
+Additional testing has been performed on MacOS 12.4 and RHEL 8.
 
 
 
