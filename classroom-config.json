@@ -1,8 +1,8 @@
 {
     "global":{
         "github-roster":"classroom-roster.csv",
-        "github-org":"HindmanCourses",
-        "canvas-course-name":"Sp23 - CS 121",
+        "github-org":"Boise-State-University-CS-121",
+        "canvas-course-name":"CS 121 Sandbox (starting F23)",
         "canvas-url":"https://boisestatecanvas.instructure.com/",
         "classroom-path":"demo"
     }
