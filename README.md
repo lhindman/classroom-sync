@@ -55,14 +55,24 @@ pip3 install python-decouple
 ## Canvas API Notes
 Instead of embedding the canvas token, I am using the python keyring library to integrate with the operating systems keystore.  Once the python modules are installed, use the following command-line options to add the required values to the OS level keystore.  
 
+#### Generate Canvas Token
 To create an Access Token in Canvas do the following:
-
 - Go to Account, Settings, New Access Token with reason “To Synchronize Github Classrooms and Grades"
 
+#### Store Canvas Token in OS Keyring
 ```
 keyring set canvas token
 # set password to the following:  <dev token from Canvas>
 ```
+#### Store Canvas Token in file
+Linux systems running the Gnome Keyring Manager, such as RedHat Enterprise Linux, do not support unlocking the keyring from the command line or over an ssh session. To work around this issue, the Canvas token can be stored in a text file called **.env** in the same directory as the sync scripts, and then read as an environment variable within the sync scripts.
+```
+touch .env
+chmod 0600 .env
+vim .env
+CANVAS_TOKEN=<paste token here>
+```
+The .gitignore file include **.env** to prevent this file from accidentally being pushed to github.
 
 ## Running on remote Linux system over SSH
 If the system has multiple versions of Python installed, it is helpful to specify the explicit version of python (and pip) to use. Depending upon the security settings, pip may require the **--user** flag in order to install the modules into the users home directory.
@@ -79,15 +89,6 @@ python3.8 classroom-sync.py <assignment>
 python3.8 classroom-sync-basic.py <assignment>
 python3.8 commit-and-push-grades.py <assignment>
 ```
-
-Linux systems running the Gnome Keyring Manager, such as RedHat Enterprise Linux, do not support unlocking the keyring from the command line or over an ssh session. To work around this issue, the Canvas token can be stored in a text file called **.env** in the same directory as the sync scripts, and then read as an environment variable within the sync scripts.
-```
-touch .env
-chmod 0600 .env
-vim .env
-CANVAS_TOKEN=<paste token here>
-```
-The .gitignore file include **.env** to prevent this file from accidentally being pushed to github.
 
 ## Development Notes
 This code was developed and tested on Ubuntu 20.04 running Python 3.8.10
