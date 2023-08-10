@@ -2,6 +2,14 @@
 # Classroom Sync Suite
 These are a collection of tools for working with GitHub Classroom assignments.  
 
+### SSH Agent
+Before running the tools below, please be certain to start the SSH Agent and add your local ssh key. The sync tools make a unique connection to github for each and if there is a password on the key, it will prompt for the password on each connection.  The SSH-Agent will cache the unlocked key for the duration of the shell session.
+
+```
+   ssh-agent
+   ssh-add
+```
+
 ### Classroom Sync (Canvas)
 This tool pulls a list of students from a Canvas course, then uses the provided roster.csv file to map the the Canvas user names to github user names. It then retrieves student repositories for the specified assignment and renames them to include Canvas username instead of their GitHub username.
 
