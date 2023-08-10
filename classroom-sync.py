@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 # Author:  Luke Hindman
 # Date: Wed 17 May 2023 01:55:54 PM MDT
 # Description: Sync tool for GitHub Classroom assignments
@@ -26,6 +27,7 @@ from subprocess import CalledProcessError
 
 import keyring
 from canvasapi import Canvas
+import decouple
 from decouple import config
 
 # Returns a dictionary containing the classroom
@@ -42,16 +44,12 @@ def load_classroom_config(config_file):
 # These can be set using the keyring command as follows:
 #    keyring set canvas token
 def canvas_connect(api_url):
-    # Canvas API key from .env file
-    API_KEY = config('CANVAS_TOKEN') 
-
-    # Fallback to OS keyring
-    if API_KEY == None:
+    # Canvas API key from .env file or CANVAS_TOKEN environment
+    #    variable. If this fails, fall back to the OS keyring.
+    try: 
+        API_KEY = config('CANVAS_TOKEN') 
+    except decouple.UndefinedValueError:
         API_KEY = keyring.get_password("canvas","token")
-
-    if API_KEY == None:
-        print("Error: Unable to load Canvas API token")
-        return None
 
     # Initialize a new Canvas object
     canvas = Canvas(api_url, API_KEY)

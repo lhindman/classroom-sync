@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Author:  Luke Hindman
 # Date: Fri 22 Jan 2021 09:45:07 AM MST
 # Description: Sync tool for GitHub Classroom assignments
