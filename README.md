@@ -71,9 +71,9 @@ Linux systems running the Gnome Keyring Manager, such as RedHat Enterprise Linux
 touch .env
 chmod 0600 .env
 vim .env
-CANVAS_TOKEN=<paste token here>
+CANVAS_TOKEN=<dev token from Canvas>
 ```
-The .gitignore file include **.env** to prevent this file from accidentally being pushed to github.
+The *.gitignore* file excludes **.env** to prevent this file from accidentally being pushed to github.
 
 ## Running on remote Linux system over SSH
 If the system has multiple versions of Python installed, it is helpful to specify the explicit version of python (and pip) to use. Depending upon the security settings, pip may require the **--user** flag in order to install the modules into the users home directory.
