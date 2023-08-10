@@ -26,6 +26,7 @@ from subprocess import CalledProcessError
 
 import keyring
 from canvasapi import Canvas
+from decouple import config
 
 # Returns a dictionary containing the classroom
 #    configuration information loaded from
@@ -41,8 +42,16 @@ def load_classroom_config(config_file):
 # These can be set using the keyring command as follows:
 #    keyring set canvas token
 def canvas_connect(api_url):
-    # Canvas API key
-    API_KEY = keyring.get_password("canvas","token")
+    # Canvas API key from .env file
+    API_KEY = config('CANVAS_TOKEN') 
+
+    # Fallback to OS keyring
+    if API_KEY == None:
+        API_KEY = keyring.get_password("canvas","token")
+
+    if API_KEY == None:
+        print("Error: Unable to load Canvas API token")
+        return None
 
     # Initialize a new Canvas object
     canvas = Canvas(api_url, API_KEY)
