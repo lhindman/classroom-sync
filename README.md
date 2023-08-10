@@ -47,8 +47,8 @@ Usage: python3 commit-and-push-grades.py <assignment>
 ## Installation Notes
 This tool requires python3.8 and the pip utility as well as the following python modules:
 ```
-pip install canvasapi
-pip install keyring
+pip3 install canvasapi
+pip3 install keyring
 ```
 
 ## Canvas API Notes
