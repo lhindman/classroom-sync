@@ -1,3 +1,4 @@
 classroom-roster.csv
 classroom-config.json
 .env
+*.csv
