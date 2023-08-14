@@ -41,6 +41,7 @@ Usage: commit-and-push-grades.py <assignment>
 ### Calculate Totals and Summarize (Canvas)
 This tool will parse the GRADE.md file located in each student repository, sum the scores from each rubric section and insert a row containing the total value. Once complete, it will generate a CSV file containing a summary of student scores for the specified assignment.
 
+```
 The following shows the sections that will be processed:  
 Planning                        /6  
 Subject Proficiency             /12  
@@ -49,7 +50,8 @@ Terminology Identification      /3
 Code Review                     /2  
 Reflection                      /4  
 -----------------------------------  
-Total                         30/30  (inserted by script)  
+Total                         30/30  (inserted by script)
+```
 
 The line containing the Total is inserted into the GRADE.md in each student repository for the specified assignment.  Once completed, a CSV file is generated in the current directory that contains a summary of all the student scores for the specified assignments.
 ```
