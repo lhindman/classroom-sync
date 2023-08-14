@@ -38,7 +38,26 @@ Usage: commit-and-push-grades.py <assignment>
     assignment - You can find the list of assignment names on GitHub Classroom
 ```
 
-## Before using this tool, do the following:
+### Calculate Totals and Summarize (Canvas)
+This tool will parse the GRADE.md file located in each student repository, sum the scores from each rubric section and insert a row containing the total value. Once complete, it will generate a CSV file containing a summary of student scores for the specified assignment.
+
+The following shows the sections that will be processed:  
+Planning                        /6  
+Subject Proficiency             /12  
+Coding Conventions              /3  
+Terminology Identification      /3  
+Code Review                     /2  
+Reflection                      /4  
+-----------------------------------  
+Total                         30/30  (inserted by script)  
+
+The line containing the Total is inserted into the GRADE.md in each student repository for the specified assignment.  Once completed, a CSV file is generated in the current directory that contains a summary of all the student scores for the specified assignments.
+```
+Usage: calculate_totals_and_summaryize.py <assignment> 
+   assignment - You can find the list of assignment names on GitHub Classroom
+```
+
+## Before using these tool, do the following:
 1. Set up SSH key-based authentication with GitHub  
 2. Download the classroom_roster.csv file from GitHub Classroom  
 3. Update classroom-config.json with the details for your classroom  
