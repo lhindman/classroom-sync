@@ -154,6 +154,10 @@ def canvas_connect(api_url):
 def canvas_get_course(canvas,course_name):
     course_dict={}
     for c in canvas.get_courses(state=['available']):
+        # Courses that are published, but that are date restricted are still considered "available" :(
+        #   This causes access errors and therefore need to be excluded.
+        if "access_restricted_by_date" in c.__dict__.keys():
+            continue
         course_dict[c.name] = c
 
     course_match = None
