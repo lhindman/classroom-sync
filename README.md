@@ -5,8 +5,10 @@ These are a collection of tools for working with GitHub Classroom assignments.
 ### SSH Agent
 Before running the tools below, please be certain to start the SSH Agent and add your local ssh key. The sync tools make a unique connection to github for each student repository and if there is a password on the key, it will prompt for the password on each connection.  The SSH-Agent will cache the unlocked key for the duration of the shell session.
 
+To ensure that the environment variables are configured correctly when starting the ssh-agent, it must be executed using the eval command. This may not be necessary on MacOS systems.
+
 ```
-   ssh-agent
+   eval $(ssh-agent)
    ssh-add
 ```
 
