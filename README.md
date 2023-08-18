@@ -62,10 +62,11 @@ Usage: calculate_totals_and_summaryize.py <assignment>
 ```
 
 ## Before using these tool, do the following:
-1. Set up SSH key-based authentication with GitHub  
-2. Download the classroom_roster.csv file from GitHub Classroom  
-3. Update classroom-config.json with the details for your classroom  
-4. Enable API access for Canvas user account and store token in OS keyring. Details are provided below
+1. Clone this repository into your local development environment
+2. Set up SSH key-based authentication with GitHub  
+3. Download the classroom_roster.csv file from GitHub Classroom  
+4. Update classroom-config.json with the details for your classroom  
+5. Enable API access for Canvas user account and store token in OS keyring. Details are provided below
 
 ## Installation Notes
 This tool requires python3.8 and the pip utility as well as the following python modules:
