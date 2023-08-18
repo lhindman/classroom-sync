@@ -3,7 +3,7 @@
 These are a collection of tools for working with GitHub Classroom assignments.  
 
 ### SSH Agent
-Before running the tools below, please be certain to start the SSH Agent and add your local ssh key. The sync tools make a unique connection to github for each and if there is a password on the key, it will prompt for the password on each connection.  The SSH-Agent will cache the unlocked key for the duration of the shell session.
+Before running the tools below, please be certain to start the SSH Agent and add your local ssh key. The sync tools make a unique connection to github for each student repository and if there is a password on the key, it will prompt for the password on each connection.  The SSH-Agent will cache the unlocked key for the duration of the shell session.
 
 ```
    ssh-agent
