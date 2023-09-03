@@ -69,7 +69,7 @@ Usage: calculate_totals_and_summaryize.py <assignment>
 5. Enable API access for Canvas user account and store token in OS keyring. Details are provided below
 
 ## Installation Notes
-This tool requires python3.8 and the corresponding pip utility. You can confirm you are running the correct versions using the following commands:
+This tool requires a minimum of python version 3.8 and the corresponding pip utility. You can confirm you are running the correct versions using the following commands:
 ```
 Last login: Sun Sep  3 10:30:02 on ttys001
 (base) platypus@sa-angreal classroom-sync % which python3
