@@ -69,7 +69,19 @@ Usage: calculate_totals_and_summaryize.py <assignment>
 5. Enable API access for Canvas user account and store token in OS keyring. Details are provided below
 
 ## Installation Notes
-This tool requires python3.8 and the pip utility as well as the following python modules:
+This tool requires python3.8 and the corresponding pip utility. You can confirm you are running the correct versions using the following commands:
+```
+Last login: Sun Sep  3 10:30:02 on ttys001
+(base) platypus@sa-angreal classroom-sync % which python3
+/Users/platypus/anaconda3/bin/python3
+(base) platypus@sa-angreal classroom-sync % which pip3
+/Users/platypus/anaconda3/bin/pip3
+(base) platypus@sa-angreal classroom-sync % python3 --version
+Python 3.11.4
+(base) platypus@sa-angreal classroom-sync % 
+```
+
+Once the minimum Python version has been confirmed and that the version of pip3 is in the same folder as the active version of python, please install the following modules:
 ```
 pip3 install canvasapi
 pip3 install keyring
