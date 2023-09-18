@@ -2,3 +2,6 @@ classroom-roster.csv
 classroom-config.json
 .env
 *.csv
+*.DS_Store
+*.pyc
+classroom-config-backup.json

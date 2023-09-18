@@ -34,10 +34,7 @@ import json
 import subprocess
 from subprocess import CalledProcessError
 
-import keyring
-from canvasapi import Canvas
-import decouple
-from decouple import config
+import canvastools
 
 sections=["Planning", "Subject Proficiency", "Coding Conventions", "Terminology Identification", "Code Review", "Reflection"]
 
@@ -131,52 +128,6 @@ def load_classroom_config(config_file):
     with open(config_file) as json_file:
         map_data = json.load(json_file)
     return map_data
-
-# Loads the canvas URL and security token from the system keystore.
-# These can be set using the keyring command as follows:
-#    keyring set canvas token
-def canvas_connect(api_url):
-    # Canvas API key from .env file or CANVAS_TOKEN environment
-    #    variable. If this fails, fall back to the OS keyring.
-    try: 
-        API_KEY = config('CANVAS_TOKEN') 
-    except decouple.UndefinedValueError:
-        API_KEY = keyring.get_password("canvas","token")
-
-    # Initialize a new Canvas object
-    canvas = Canvas(api_url, API_KEY)
-
-    return canvas
-
-# Iterates through the list of active courses and returns
-#   a course object that matches the specified course_name.
-#   if no matching course is found, returns None
-def canvas_get_course(canvas,course_name):
-    course_dict={}
-    for c in canvas.get_courses(state=['available']):
-        # Courses that are published, but that are date restricted are still considered "available" :(
-        #   This causes access errors and therefore need to be excluded.
-        if "access_restricted_by_date" in c.__dict__.keys():
-            continue
-        course_dict[c.name] = c
-
-    course_match = None
-    for c in course_dict.keys():
-        if course_name in c:
-            course_match = course_dict[c]
-
-    return course_match
-
-# Return a dictionary containing User objects of students
-#   enrolled the specified course. The dictionary keys
-#   are the canvas user_id numbers.
-def canvas_get_students(course):
-    student_dict={}
-    for user in course.get_users(enrollment_type=['student']):
-        student_dict[user.id] = user
-    
-    return student_dict
-
 
 # Repositories that that represent multiple assignments will may contain
 #   multiple GRADE.md files. The purpose of this function is to begin
@@ -287,24 +238,25 @@ def main():
     roster_file = classroom_config['global']['github-roster']
     classroom_path = classroom_config['global']['classroom-path']
     course_name = classroom_config['global']['canvas-course-name']
+    course_code = classroom_config['global']['canvas-course-code']
     api_url = classroom_config['global']['canvas-url']
     github_org = classroom_config['global']['github-org']
 
 
     # Connect to the Canvas gradebook
-    canvas = canvas_connect(api_url)
+    canvas = canvastools.canvas_connect(api_url)
 
     if canvas == None:
         print("Error: Unable to connect to Canvas ")
         sys.exit(1)
 
-    canvas_course = canvas_get_course(canvas,course_name)
+    canvas_course = canvastools.canvas_get_course(canvas,course_code,course_name)
 
     if canvas_course == None:
-        print("Error: Unable to Canvas course match for: " + course_name)
+        print("Error: Unable to Canvas course match: %s (%s) " % (course_name,course_code))
         sys.exit(1)
 
-    canvas_students = canvas_get_students(canvas_course)
+    canvas_students = canvastools.canvas_get_students(canvas_course)
 
     # Load GitHub Roster and store to dictionary, indexed by Canvas username in lowercase
     github_roster = get_github_roster(roster_file)

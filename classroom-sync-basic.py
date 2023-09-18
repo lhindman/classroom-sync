@@ -118,10 +118,8 @@ def main():
 
     # Load the classroom configuration data
     classroom_config = load_classroom_config("classroom-config.json")
-
     roster_file = classroom_config['global']['github-roster']
     classroom_path = classroom_config['global']['classroom-path']
-
     github_org = classroom_config['global']['github-org']
 
 
