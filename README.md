@@ -57,7 +57,7 @@ Total                         30/30  (inserted by script)
 
 The line containing the Total is inserted into the GRADE.md in each student repository for the specified assignment.  Once completed, a CSV file is generated in the current directory that contains a summary of all the student scores for the specified assignments.
 ```
-Usage: calculate_totals_and_summaryize.py <assignment> 
+Usage: calculate_totals_and_summarize.py <assignment> 
    assignment - You can find the list of assignment names on GitHub Classroom
 ```
 
