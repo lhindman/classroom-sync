@@ -59,6 +59,7 @@ sudo apt-get install build-essential
 sudo apt-get install valgrind
 sudo apt-get install default-jdk
 sudo apt-get install python3-full
+sudo apt-get install zip
 ```
 
 ### Install Python Modules for Classroom Sync
