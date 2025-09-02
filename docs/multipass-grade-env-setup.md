@@ -55,7 +55,7 @@ sudo apt-get upgrade
 
 ### Install Basic Development Tools
 ```
-sudo apt-get install build-essential valgrind default-jdk python3-full zip wget python3-pip
+sudo apt-get install build-essential valgrind default-jdk python3-full zip wget python3-pip python3-keyring
 ```
 
 ### Install Python Modules for Classroom Sync
