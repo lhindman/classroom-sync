@@ -62,10 +62,7 @@ sudo apt-get install build-essential valgrind default-jdk python3-full zip wget 
 In Ubuntu 24.04, the decision has been made to force users to deploy their own python virtual environments to avoid potential conflicts with system modules.  However, in this case we are deploying an entire virtual Ubuntu instances for the specific purpose for running python. In addition, the modules installed below do not affect the system modules. For that reason, we can safely utilze the **--break-system-packages** flag to allow pip to manage these packages.
 
 ```
-sudo apt-get install python3-pip
-pip3 install --break-system-packages canvasapi
-pip3 install --break-system-packages keyring
-pip3 install --break-system-packages python-decouple
+pip3 install --break-system-packages canvasapi keyring python-decouple
 ```
 
 ## Setup SSH Key-based authentication with GitHub.
