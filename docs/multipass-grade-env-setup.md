@@ -129,7 +129,7 @@ The Canvas Course Name and Canvas Course Code can be found on the settings page 
 ```
 
 ### Enable Canvas API Access
-The recommended ways to store the Canvas API yes is to use the system keyring. Unfortunately on Ubuntu the OS's keyring manager requires the GNOME GUI which we are not running. For that reason, we will need to store the Canvas Token in a .env files in the classroom-sync folder. 
+The recommended ways to store the Canvas API token is to use the system keyring. Unfortunately on Ubuntu the OS's keyring manager requires the GNOME GUI which we are not running. For that reason, we will need to store the Canvas Token in a .env files in the classroom-sync folder. The *.gitignore* file excludes **.env** to prevent this file from accidentally being pushed to github. 
 
 #### Generate Canvas Token
 To create an Access Token in Canvas do the following:
@@ -143,4 +143,4 @@ chmod 0600 .env
 vim .env
 CANVAS_TOKEN=<dev token from Canvas>
 ```
-The *.gitignore* file excludes **.env** to prevent this file from accidentally being pushed to github.
+
