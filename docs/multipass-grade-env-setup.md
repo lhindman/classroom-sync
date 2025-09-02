@@ -99,12 +99,48 @@ git config --global pull.rebase false
 ```
 
 ## Configure the classroom sync tool
+The current design of classroom sync only allows it to connect to a single classroom at a time. Multiple classrooms can be accomodated one of two ways.  The first is to simply have multiple copies of the classroom-sync repository such as cs121-classroom-sync and cs221-classroom-sync, each configured for its respective course.  The second is to create separate configuration files such as cs121-classroom-config.json and cs221-classroom-config.json, then modify each tool in the classroom sync suite to accept a config file on the command-line. 
+
 ### Clone the classroom-sync repository into the grading environment
 ```
 git clone https://github.com/lhindman/classroom-sync
 ```
 ### Download student roster
+Log into GitHub classroom and download the student roster. Save this file as classroom-roster.csv in the classroom-sync folder.
 
 ### Update classroom-config.json
+Copy the provided classroom-config-example.json file to classroom-config.json, then edit classroom-config.json with the details for your course.
+```
+cp classroom-config-example.json classroom-config.json
+```
+The Canvas Course Name and Canvas Course Code can be found on the settings page for your Canvas course site. The example below is the config for my Fall 2025 section of CS253.
+
+```
+{
+    "global":{
+        "github-roster":"classroom-roster.csv",
+        "github-org":"HindmanCourses",
+        "canvas-course-name":"Fa25 - CS 253 - Software Development in C",
+        "canvas-course-code":"CS253 4001 CS253 4002",
+        "canvas-url":"https://boisestatecanvas.instructure.com/",
+        "classroom-path":"/home/ubuntu/grading"
+    }
+}
+```
 
 ### Enable Canvas API Access
+The recommended ways to store the Canvas API yes is to use the system keyring. Unfortunately on Ubuntu the OS's keyring manager requires the GNOME GUI which we are not running. For that reason, we will need to store the Canvas Token in a .env files in the classroom-sync folder. 
+
+#### Generate Canvas Token
+To create an Access Token in Canvas do the following:
+- Go to Account, Settings, New Access Token with reason “To Synchronize Github Classrooms and Grades"
+
+#### Store Canvas Token in file
+Linux systems running the Gnome Keyring Manager, such as RedHat Enterprise Linux, do not support unlocking the keyring from the command line or over an ssh session. To work around this issue, the Canvas token can be stored in a text file called **.env** in the same directory as the sync scripts, and then read as an environment variable within the sync scripts.
+```
+touch .env
+chmod 0600 .env
+vim .env
+CANVAS_TOKEN=<dev token from Canvas>
+```
+The *.gitignore* file excludes **.env** to prevent this file from accidentally being pushed to github.
