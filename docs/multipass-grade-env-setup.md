@@ -15,7 +15,7 @@ https://canonical.com/multipass/install
 ## Provision VM for grading
 Multipass installs a GUI interface that can be utilized for basic VM provisioning and management.  Simply open the Multipass application from your Applications folder (or Start Menu). Selected the Ubuntu 24.04 LTS image and click the settings button (sprocket).
 
-![Screen showing the available Ubuntu images](../images/multipass-launch.png "Mulitpass Image Launch Screen")
+![Screen showing the available Ubuntu images](../images/multipass-launch.png "Multipass Image Launch Screen")
 
 One the configuration screen, a good starting point is 2 CPU cores, 4GB RAM and 100GB storage space. You are welcome to adjust these to your own preferences. When you are done, click launch.
 
@@ -143,6 +143,56 @@ chmod 0600 .env
 vim .env
 CANVAS_TOKEN=<dev token from Canvas>
 ```
+
+## VSCode Remote Development
+The last step in this process is to install VSCode on the host OS and then use the Remote Development Extension to connect to the grader VM over SSH.
+### Download and install VSCode
+VSCode supports MacOS, Linux, and Windows. 
+[VSCode Download](https://code.visualstudio.com/download)
+
+### Generate SSH Key on host system
+If you have an existing SSH key on your host system you can skip this step.  If not, you will need to generate a new public / private keypair for SSH on your host system using ssh-keygen. This process is varies based upon your OS, so use look up the appropriate technique.
+
+### Add your public SSH key to the authorized_keys file on the grader VM
+Use vim (or your favorite text editor of choice) to add the public SSH key from your host OS to the authorized_keys file on the VM.
+```
+vim ~/.ssh/authorized_keys
+```
+
+### Record the private IP address of the grader VM
+The grader virtual machine will be assigned a private IP address in the 192.168.64.0/24 subnet which is only accessible from other VMs and the host OS.  the **ip addr* command will display the ipconfigration for the vm. From the output below you can see that the private IP for my grader VM is ***192.168.64.19***.
+```
+ubuntu@Grader:~$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp0s1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:05:9c:fb brd ff:ff:ff:ff:ff:ff
+    inet 192.168.64.19/24 metric 100 brd 192.168.64.255 scope global dynamic enp0s1
+       valid_lft 2008sec preferred_lft 2008sec
+    inet6 fde4:763:c6c8:2aa0:5054:ff:fe05:9cfb/64 scope global dynamic mngtmpaddr noprefixroute 
+       valid_lft 2591986sec preferred_lft 604786sec
+    inet6 fe80::5054:ff:fe05:9cfb/64 scope link 
+       valid_lft forever preferred_lft forever
+```
+### Remote Development with VSCode.
+In VSCode, click the Extensions button and install the Remote Development Extension Pack. Once installed, click the connect button in the lower left corner of the VSCode window.  
+
+![Screen showing VSCode Connection](../images/vscode-connect-window.png "VSCode Connect Screen")
+
+From the Dropdown select "+ Add New SSH Host" then enter the following for the ssh connection command, substituting your own IP address recorded in the previous step.
+
+```
+ssh ubuntu@192.168.64.18 -A
+```
+
+When prompted save this to the ssh config file in your home directory. Once added it will prompt you to connect and then will ask you for your private SSH key password (if you set one) and then prompt you to accept the finger print of the VM. At that point you should be good to go! :)
+
+VSCode provides some excellent guides and tutorials for remote development and are worth checking out.
+[VSCode Remote Development Tutorials](https://code.visualstudio.com/docs/remote/remote-overview)
 
 ## That's All Folks!
 At this point you're ready to begin using the tools in the classroom-sync suite
