@@ -144,3 +144,5 @@ vim .env
 CANVAS_TOKEN=<dev token from Canvas>
 ```
 
+## That's All Folks!
+At this point you're ready to begin using the tools in the classroom-sync suite
