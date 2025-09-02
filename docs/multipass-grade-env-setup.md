@@ -91,6 +91,12 @@ ssh-add ~/.ssh/id_ed25519
 
 It is also possible to start up an SSH agent on the host OS system and add the keys to that instances. Then connect to the grading VM over ssh and pass that SSH agent transparently over the SSH tunnel. This process can be straightforward on MacOS and Linux host systems, but can be more challenging on Windows based hosts.
 
+### Configure Git user metadata
+```
+git config --global user.name "Your Name"
+git config --global user.email "username@u.boisestate.edu"     
+git config --global pull.rebase false
+```
 
 ## Configure the classroom sync tool
 ### Clone the classroom-sync repository into the grading environment
